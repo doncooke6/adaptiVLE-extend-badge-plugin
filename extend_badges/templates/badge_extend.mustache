@@ -1,0 +1,38 @@
+<div>
+<table width ="100%">
+<tr><th width="20%">Course</th><th width = "20%">Quiz</th><th width = "10%">Criteria</th><th width = "20%">Badge</th></tr>
+
+   {{#extendbadges}}
+   <tr>
+     <td>Sample Course{{{course}}}</td>
+     <td>Sample Quiz{{{quiz}}}</td>
+     <td>65 %{{{quiz_grade}}}</td>
+     <td>Sample Badge{{{badge}}}</td>
+     <td>
+       <a href="{{{togglelink}}}">
+         {{#toggletarget}}
+         {{#pix}}i/show, moodle, {{#str}} enable, moodle {{/str}}{{/pix}}
+         {{/toggletarget}}
+         {{^toggletarget}}
+         {{#pix}}i/hide, moodle, {{#str}} disable, moodle {{/str}}{{/pix}}
+         {{/toggletarget}}
+       </a>
+
+      <td>
+         <a href="update_expand_badge.php?id={{id}}">Edit</a>
+      </td>
+      <td>
+         <a href="delete_expand_badge.php?id={{id}}">Delete</a>
+      </td>
+    </tr>
+
+  {{/extendbadges}}
+</table>
+
+</div>
+<p></p>
+<p></p>
+<div>
+     <button type="button">Add a new badge extension</button>
+</div>
+</div>
