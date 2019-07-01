@@ -29,7 +29,6 @@
 
 require_login();
 
-
 $title = get_string('pluginname', 'local_extend_badges');
 $heading = get_string('heading', 'local_extend_badges');
 $url = new moodle_url('/local/extend_badges/');
@@ -40,30 +39,31 @@ $PAGE->set_url($url);
 $PAGE->set_context($context);
 $PAGE->set_title($title);
 $PAGE->set_heading($heading);
-
+$PAGE->requires->jquery();
 $formparams = new stdClass;
 $mform = new local_badge_extend_form();
 
-//Form processing and displaying is done here
+// Form processing and displaying is done here.
 if ($mform->is_cancelled()) {
-    //Handle form cancel operation, if cancel button is present on form
+    // Handle form cancel operation, if cancel button is present on form.
 
-  header("Location: " . $CFG->wwwroot.'/local/extend_badges/index.php');
+    header("Location: " . $CFG->wwwroot.'/local/extend_badges/index.php');
 
 } else if ($fromform = $mform->get_data()) {
-  //In this case you process validated data. $mform->get_data() returns data posted in form.
-
-  add_extend_record($fromform->course, $fromform->quiz, $fromform->criteriagrade ,$fromform->badgetobeissued);
-  header("Location: " . $CFG->wwwroot.'/local/extend_badges/index.php');
+    // In this case you process validated data. $mform->get_data() returns data posted in form.
+    if ($fromform->quiz !== null) {
+       add_extend_record($fromform->course, $fromform->quiz, $fromform->criteriagrade, $fromform->badgetobeissued);
+       header("Location: " . $CFG->wwwroot.'/local/extend_badges/index.php');
+    }
 
 } else {
-  // this branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
-  // or on the first display of the form.
-  $toform = new stdClass;
+    // This branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed.
+    // Or on the first display of the form.
+    $toform = new stdClass;
 
-  //Set default data (if any)
-  $mform->set_data($toform);
-  //displays the form
-  echo $OUTPUT->header();
-  $mform->display();
+    // Set default data (if any).
+    $mform->set_data($toform);
+    // Displays the form.
+    echo $OUTPUT->header();
+    $mform->display();
 }

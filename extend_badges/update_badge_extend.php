@@ -75,6 +75,8 @@ $PAGE->set_context($context);
 $PAGE->set_title($title);
 $PAGE->set_heading($heading);
 
+$PAGE->requires->jquery();
+
 $formparams = new stdClass;
 $mform = new local_badge_extend_form($badgerequestid, $courseid, $quizid, $badgeid, $criteria);
 

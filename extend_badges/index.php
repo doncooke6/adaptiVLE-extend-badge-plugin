@@ -85,7 +85,7 @@ $PAGE->set_heading($heading);
       //echo $OUTPUT->footer();
 
       echo $OUTPUT->header();
-      $bdge = new badge_extend_renderer;
+      $bdge = new badge_extend_renderer($PAGE, null);
       $bdge->render_badge_extend_browse($badge_extends);
       $bdge->render_badge_extend_add();
       echo $OUTPUT->footer();
@@ -93,7 +93,7 @@ $PAGE->set_heading($heading);
 
   //TODO No rows to show - deal with this
   echo $OUTPUT->header();
-  $bdge = new badge_extend_renderer;
+  $bdge = new badge_extend_renderer($PAGE, null);
   $bdge->no_badge_extend_found();
   $bdge->render_badge_extend_add();
   echo $OUTPUT->footer();
