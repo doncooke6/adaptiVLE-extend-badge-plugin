@@ -99,26 +99,28 @@ function local_extend_badges_extend_settings_navigation($settingsnav, $context) 
     global $CFG, $PAGE;
 
 // TODO Needs to be fixed TODO
-  $cm = $PAGE->cm;
-    if (!$cm) {
-        return;
-    }
+  // $cm = $PAGE->cm;
+  //   if (!$cm) {
+  //       return;
+  //   }
+  //
+  //   $context = $cm->context;
+  //   $course = $PAGE->course;
+  //
+  //   if (!$course) {
+  //       return;
+  //   }
+  //   // Only add this settings item on non-site course pages.
+  //   if (!$PAGE->course or $PAGE->course->id == 1) {
+  //       return;
+  //   }
 
-    $context = $cm->context;
-    $course = $PAGE->course;
 
-    if (!$course) {
-        return;
-    }
-    // Only add this settings item on non-site course pages.
-    if (!$PAGE->course or $PAGE->course->id == 1) {
-        return;
-    }
     //TODO Need this to work for permissions // TODO
     // Only let users with the appropriate capability see this settings item.
-    if (!has_capability('local/extend_badges:admin', context_course::instance($PAGE->course->id))) {
-        return;
-    }
+    //if (!has_capability('local/extend_badges:admin', context_course::instance($PAGE->course->id))) {
+    //    return;
+    //}
     // TODO // End of permissions check
 
     if ($settingnode = $settingsnav->find('courseadmin', navigation_node::TYPE_COURSE)) {
