@@ -24,9 +24,9 @@
 
 $capabilities = array(
 
-    'moodle/localbadgeextend:admin' => array(
+    'local/extend_badges:admin' => array(
         'captype' => 'write',
-        'contextlevel' => CONTEXT_MODULE,
+        'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,

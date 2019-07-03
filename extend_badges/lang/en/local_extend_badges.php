@@ -31,3 +31,4 @@ $string['selectquiz'] = 'Select the quiz';
 $string['criteriagrade'] = 'Enter the pass mark';
 $string['badgetobeissued'] = 'Select the badge to be issued';
 $string['extendbadges'] = 'Create Extended Badges';
+$string['extend_badges:admin'] = 'Administer Extension Grade Badges';
