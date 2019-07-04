@@ -27,10 +27,10 @@ $tasks = [
     [
         'classname' => 'local_extend_badges\task\extend_badges',
         'blocking' => 0,
-        'minute' => '30',
-        'hour' => '17',
+        'minute' => '*/5',
+        'hour' => '*',
         'day' => '*',
-        'month' => '1,7',
-        'dayofweek' => '0',
+        'month' => '*',
+        'dayofweek' => '*',
     ],
 ];

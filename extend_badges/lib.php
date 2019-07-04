@@ -82,11 +82,11 @@ function local_extend_badges_cron() {
                       // issue the badge to them
 
                       // create a record in the issued tble to show that the user has received the badge
-                      $s = 'INSERT INTO {local_badge_request_issued}  (badgerequestid, userid, timecreated)
+                      $s = 'INSERT INTO {local_badge_request_issued}  (badgerequestid, userid, issuedate)
                                   VALUES (:badgereqid, :userid, :timecreated)';
                       $parms = array('badgereqid' => $recbadgereq->id, 'userid' => $recquizgrade->userid, 'timecreated' => time());
                       $DB->execute($s, $parms);
-
+                      echo 'Created an extended badge issued record for user  : ' . $user;
                     } // end of add request
               }
           }
@@ -96,7 +96,7 @@ function local_extend_badges_cron() {
 
 
 function local_extend_badges_extend_settings_navigation($settingsnav, $context) {
-    global $CFG, $PAGE;
+    global $CFG, $PAGE, $ADMIN;
 
 // TODO Needs to be fixed TODO
   // $cm = $PAGE->cm;
@@ -115,32 +115,47 @@ function local_extend_badges_extend_settings_navigation($settingsnav, $context) 
   //       return;
   //   }
 
-
     //TODO Need this to work for permissions // TODO
     // Only let users with the appropriate capability see this settings item.
     //if (!has_capability('local/extend_badges:admin', context_course::instance($PAGE->course->id))) {
-    //    return;
-    //}
+    // if (has_capability('local/extend_badges:admin', context_system::instance())) {
+    //
+    //     $ADMIN->add('root', new admin_category('local_extend_badges', new lang_string('pluginname', 'local_extend_badges')));
+    //
+    //     $ADMIN->add(
+    //         'local_extend_badges',
+    //         new admin_externalpage(
+    //             'local_extend_badges_index',
+    //             new lang_string('pluginname', 'local_extend_badges'),
+    //             new moodle_url('/local/extend_badges/index.php'),
+    //             'local/myplugin:view'
+    //         )
+    //     );
+    // }
+
+
+
     // TODO // End of permissions check
 
-    if ($settingnode = $settingsnav->find('courseadmin', navigation_node::TYPE_COURSE)) {
-        $stroptionheading = get_string('extendbadges', 'local_extend_badges');
-        $url = new moodle_url('/local/extend_badges/index.php', array('id' => $PAGE->course->id));
-        $extendbadgesnode = navigation_node::create(
-            $stroptionheading,
-            $url,
-            navigation_node::NODETYPE_LEAF,
-            'extend_badges',
-            'extend_badges',
-            new pix_icon('t/addcontact', $stroptionheading)
-        );
-        if ($PAGE->url->compare($url, URL_MATCH_BASE)) {
-            $extendbadgesnode->make_active();
-        }
-        $settingnode->add_node($extendbadgesnode);
-    }
+    if (has_capability('local/extend_badges:admin', context_system::instance())) {
+          if ($settingnode = $settingsnav->find('courseadmin', navigation_node::TYPE_COURSE)) {
+              $stroptionheading = get_string('extendbadges', 'local_extend_badges');
+              $url = new moodle_url('/local/extend_badges/index.php', array('id' => $PAGE->course->id));
+              $extendbadgesnode = navigation_node::create(
+                  $stroptionheading,
+                  $url,
+                  navigation_node::NODETYPE_LEAF,
+                  'extend_badges',
+                  'extend_badges',
+                  new pix_icon('t/addcontact', $stroptionheading)
+              );
+              if ($PAGE->url->compare($url, URL_MATCH_BASE)) {
+                  $extendbadgesnode->make_active();
+              }
+              $settingnode->add_node($extendbadgesnode);
+       }
+   }
 }
-
 function get_badgecourse($courseid){
 global $DB;
 

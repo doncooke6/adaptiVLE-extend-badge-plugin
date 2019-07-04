@@ -23,7 +23,6 @@
  */
 
 $capabilities = array(
-
     'local/extend_badges:admin' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -31,6 +30,15 @@ $capabilities = array(
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
             'manager' => CAP_ALLOW
-        )
+        ),
+    ),
+    'local/extend_badges:admin' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        ),
     ),
 );
