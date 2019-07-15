@@ -24,31 +24,33 @@
  // Include config.php.
 
 require_once(__DIR__.'/../../config.php');
+require_login();
+
 $badgerequestid = required_param('badgeid', PARAM_INT);
 
 global $DB;
 
-       $s = 'SELECT enabled
-             FROM {local_badge_requests}
-             WHERE id = :badgeid';
+$s = 'SELECT enabled
+     FROM {local_badge_requests}
+     WHERE id = :badgeid';
 
-       $parms = array('badgeid' => $badgerequestid);
+$parms = array('badgeid' => $badgerequestid);
 
-       if ($rec = $DB->get_record_sql($s,$parms))  {
-           if ($rec->enabled) {
-               $newenabled = 0;
-           } else {
-              $newenabled = 1;
-           }
-           $s = 'UPDATE {local_badge_requests}
-                 SET enabled = :newenabled
-                 WHERE id = :badgeid';
+if ($rec = $DB->get_record_sql($s, $parms)) {
+    if ($rec->enabled) {
+         $newenabled = 0;
+    } else {
+        $newenabled = 1;
+    }
+    $s = 'UPDATE {local_badge_requests}
+         SET enabled = :newenabled
+         WHERE id = :badgeid';
 
-           $parms = array('newenabled' => $newenabled , 'badgeid' => $badgerequestid);
-           // update the record toggling the value
-           $DB->execute($s, $parms);
-       }
+    $parms = array('newenabled' => $newenabled , 'badgeid' => $badgerequestid);
+    // Update the record toggling the value.
+    $DB->execute($s, $parms);
+}
 
- // get the value of the enabled field for the badge and toggle /**
- // Rerender the index page - TODO Refactor to do this in ajax - not page refresh
+ // Get the value of the enabled field for the badge and toggle.
+ // Rerender the index page - TODO Refactor to do this in ajax - not page refresh.
    header("Location: " . $CFG->wwwroot.'/local/extend_badges/index.php');

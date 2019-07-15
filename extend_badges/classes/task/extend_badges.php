@@ -23,15 +23,17 @@
  */
 
 namespace local_extend_badges\task;
- require_once($CFG->dirroot . '/local/extend_badges/lib.php');
+defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
+require_once($CFG->dirroot . '/local/extend_badges/lib.php');
+
 
 
 class extend_badges extends \core\task\scheduled_task {
-  public function get_name() {
-    return get_string('name', 'local_extend_badges');
-  }
+    public function get_name() {
+        return get_string('name', 'local_extend_badges');
+    }
 
-  public function execute() {
-    local_extend_badges_cron();
-  }
+    public function execute() {
+        local_extend_badges_cron();
+    }
 }

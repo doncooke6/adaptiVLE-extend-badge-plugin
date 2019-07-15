@@ -43,27 +43,18 @@ $PAGE->set_context($context);
 $PAGE->set_title($title);
 $PAGE->set_heading($heading);
 
-   $s = 'SELECT id, course, quiz, quiz_grade, badge, enabled, timecreated, timemodified
+$s = 'SELECT id, course, quiz, quiz_grade, badge, enabled, timecreated, timemodified
            FROM {local_badge_requests}';
-   if ($rs = $DB->get_records_sql($s)) {
+if ($rs = $DB->get_records_sql($s)) {
 
-      $badge_extends = array();
+      $badgeextends = array();
       $context = (object) [
           'extendbadges' => [],
       ];
 
       foreach ($rs as $record) {
-          // taking the badge extension record and add it to the form data for the template renderer
+          // Taking the badge extension record and add it to the form data for the template renderer.
           $c = new stdClass;
-          // $c->id           = $record->id;
-          // $c->course       = 'x'. $record->course;
-          // $c->quiz         = 'x'. $record->quiz;
-          // $c->quiz_grade   = $record->quiz_grade;
-          // $c->badge        = $record->badge;
-          // $c->enabled      = $record->enabled;
-          // $c->timecreated  = $record->timecreated;
-          // $c->timemodified = $record->timemodified;
-
           $c->id           = $record->id;
           $c->course       = get_badgecourse($record->course);
           $c->quiz         = get_badgequiz($record->quiz);
@@ -73,28 +64,21 @@ $PAGE->set_heading($heading);
           $c->timecreated  = $record->timecreated;
           $c->timemodified = $record->timemodified;
 
-          // Add this one to the end of our list
-          $badge_extends[] = $c;
-      }
-
-      $context->extendbadges[] = $badge_extends;
-
-      // ## Mustache version
-      //echo $OUTPUT->header();
-      //echo $OUTPUT->render_from_template('local_extend_badges/badge_extend', $context);
-      //echo $OUTPUT->footer();
-
-      echo $OUTPUT->header();
-      $bdge = new badge_extend_renderer($PAGE, null);
-      $bdge->render_badge_extend_browse($badge_extends);
-      $bdge->render_badge_extend_add();
-      echo $OUTPUT->footer();
+          // Add this one to the end of our list.
+          $badgeextends[] = $c;
+        }
+        $context->extendbadges[] = $badgeextends;
+        echo $OUTPUT->header();
+        $bdge = new badge_extend_renderer($PAGE, null);
+        $bdge->render_badge_extend_browse($badgeextends);
+        $bdge->render_badge_extend_add();
+        echo $OUTPUT->footer();
 } else {
 
-  //TODO No rows to show - deal with this
-  echo $OUTPUT->header();
-  $bdge = new badge_extend_renderer($PAGE, null);
-  $bdge->no_badge_extend_found();
-  $bdge->render_badge_extend_add();
-  echo $OUTPUT->footer();
+    // TODO No rows to show - deal with this.
+    echo $OUTPUT->header();
+    $bdge = new badge_extend_renderer($PAGE, null);
+    $bdge->no_badge_extend_found();
+    $bdge->render_badge_extend_add();
+    echo $OUTPUT->footer();
 }

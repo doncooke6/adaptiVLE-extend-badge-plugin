@@ -31,36 +31,34 @@
 $badgerequestid = optional_param('editid', 0, PARAM_INT);
 $reentrycourseid = optional_param('courseid', 0, PARAM_INT);
 
-// Retrieve and populate the values from the badge extension request
-if ($badgerequestid != 0) {
+// Retrieve and populate the values from the badge extension request.
    global $DB;
 
-   $s = 'SELECT id, course, quiz, quiz_grade, badge, enabled, timecreated, timemodified
+if ($badgerequestid != 0) {
+    $s = 'SELECT id, course, quiz, quiz_grade, badge, enabled, timecreated, timemodified
            FROM {local_badge_requests}
            WHERE id = :badgeextendid';
-  $parms = array('badgeextendid' => $badgerequestid);
+    $parms = array('badgeextendid' => $badgerequestid);
 
-  if ($recbadgeext = $DB->get_record_sql($s, $parms)) {
+    if ($recbadgeext = $DB->get_record_sql($s, $parms)) {
 
-
-     $courseid = $recbadgeext->course;
-     $quizid = $recbadgeext->quiz;
-     $badgeid = $recbadgeext->badge;
-     $criteria = $recbadgeext->quiz_grade;
+        $courseid = $recbadgeext->course;
+        $quizid = $recbadgeext->quiz;
+        $badgeid = $recbadgeext->badge;
+        $criteria = $recbadgeext->quiz_grade;
     }
-  }
-  else {
-    $badgerequestid = 0;
-    $courseid = 0;
-    $quizid = 0;
-    $badgeid = 0;
-    $criteria = 0;
-  }
+} else {
+      $badgerequestid = 0;
+      $courseid = 0;
+      $quizid = 0;
+      $badgeid = 0;
+      $criteria = 0;
+}
 
-  // On reentry (via js callback) if course has changed - then change course to limit quiz dropdown
-  if ($reentrycourseid !== 0) {
+  // On reentry (via js callback) if course has changed - then change course to limit quiz dropdown.
+if ($reentrycourseid !== 0) {
      $courseid = $reentrycourseid;
-  }
+}
 
 require_login();
 
@@ -80,26 +78,28 @@ $PAGE->requires->jquery();
 $formparams = new stdClass;
 $mform = new local_badge_extend_form($badgerequestid, $courseid, $quizid, $badgeid, $criteria);
 
-//Form processing and displaying is done here
+ // Form processing and displaying is done here.
 if ($mform->is_cancelled()) {
-    //Handle form cancel operation, if cancel button is present on form
-
-  header("Location: " . $CFG->wwwroot.'/local/extend_badges/index.php');
+    // Handle form cancel operation, if cancel button is present on form.
+    header("Location: " . $CFG->wwwroot.'/local/extend_badges/index.php');
 
 } else if ($fromform = $mform->get_data()) {
-  //In this case you process validated data. $mform->get_data() returns data posted in form.
-
-  update_extend_record($fromform->badgeextendid, $fromform->course, $fromform->quiz, $fromform->criteriagrade ,$fromform->badgetobeissued);
-  header("Location: " . $CFG->wwwroot.'/local/extend_badges/index.php');
+    // In this case you process validated data. $mform->get_data() returns data posted in form.
+    update_extend_record($fromform->badgeextendid,
+                         $fromform->course,
+                         $fromform->quiz,
+                         $fromform->criteriagrade,
+                         $fromform->badgetobeissued);
+    header("Location: " . $CFG->wwwroot.'/local/extend_badges/index.php');
 
 } else {
-  // this branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed
-  // or on the first display of the form.
-  $toform = new stdClass;
+    // This branch is executed if the form is submitted but the data doesn't validate and the form should be redisplayed.
+    // Or on the first display of the form.
+    $toform = new stdClass;
 
-  //Set default data (if any)
-  $mform->set_data($toform);
-  //displays the form
-  echo $OUTPUT->header();
-  $mform->display();
+    // Set default data (if any).
+    $mform->set_data($toform);
+    // Displays the form.
+    echo $OUTPUT->header();
+    $mform->display();
 }

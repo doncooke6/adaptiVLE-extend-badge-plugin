@@ -27,16 +27,14 @@
 require_once(dirname(__FILE__) . '/../../../config.php');
 
 require_once($CFG->dirroot.'/lib/badgeslib.php');
-// Lets start with a known user and a known badge and issue the badge to the userid
-
+// Lets start with a known user and a known badge and issue the badge to the userid.
 require_login();
 
+$testbadgeid = 1; // The badge for our test.
 
-$testBadgeID = 1; // the badge for our test
+$testbadge = new badge($testbadgeid);
+$testuser = 4; // Default to logged in user.
 
-$testbadge = new badge($testBadgeID);
-$testuser =  4; // default to logged in user
-
-// before the issuing of the badge
+// Before the issuing of the badge.
 $testbadge->issue($testuser, false);
-// after the issuing of the badge
+// After the issuing of the badge.

@@ -22,22 +22,21 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- /** Include config */
+ // Include config.
  require_once(dirname(__FILE__) . '../../../config.php');
  require_login();
 
 
- /** Include config */
+ // Include config.
  require_once(dirname($CFG->dirroot . '/local/extend_badges/badge_extend_form.php');
-// get the form module
+// Get the form module.
 $badgeform = new local_badge_extend_form;
 echo 'Form loaded .. ';exit;
-// show the select list for all courses
+// Show the select list for all courses.
 var_dump($badgeform->getcourses());
 
-// show the select list for one courses
+// Show the select list for one courses.
 var_dump($badgeform->getquizes());
 
-// show select list of all badges
+// Show select list of all badges.
 var_dump($badgeform->getbadges());
-?>

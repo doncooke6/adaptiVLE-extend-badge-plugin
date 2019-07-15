@@ -21,7 +21,7 @@
  * @copyright 2012 NetSpot {@link http://www.netspot.com.au}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+ defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 $capabilities = array(
     'local/extend_badges:admin' => array(
         'captype' => 'write',
